@@ -1,23 +1,37 @@
- $(document).ready(function() {
+$(document).ready(function () {
+  // add time
+  $("#currentDay").text(moment().format("dddd, MMMM Do YYYY"));
 
-     $('#currentDay').text(moment().format('dddd, MMMM Do YYYY'));
-  
-     $('.saveBtn').on('click', function(){
-       console.log(this);
-         var plans = $(this).siblings(".description").value();
-         var time = $(this).parent().attr('id');
+  // Saves input entered into text area for each hour
 
-         localStorage.setItem(plans, time);
-       });
+  $(".saveBtn").on("click", function () {
+    var click = $(this).parent().attr("id");
+    var eventInput = $(this).siblings(".description").val();
 
-     $("#9am .description").value(localStorage.getItem("9"));
-     $('#10am .description').value(localStorage.getItem('10'));
-     $('#11am .description').value(localStorage.getItem('11'));
-     $('#12pm .description').value(localStorage.getItem('12'));
-     $('#1pm .description').value(localStorage.getItem('1'));
-     $('#2pm .description').value(localStorage.getItem('2'));
-     $('#3pm .description').value(localStorage.getItem('3'));
-     $('#4pm .description').value(localStorage.getItem('4'));
-     $('#5pm .description').value(localStorage.getItem("5"));
+    localStorage.setItem(click, ".description", eventInput);
 
- });
+    console.log(click, eventInput);
+  });
+
+  // shades each time-block
+  $(".description").each(function () {
+    // gets value of data-time attr
+    var time = $(this).data("time");
+    var currentHour = moment().hour();
+
+    //  evaluating if time is past, present, or future
+    // then shades time according to past, present, or future
+    if (time < currentHour) {
+      console.log(time, "past");
+      $(this).css({ backgroundColor: "grey" });
+    } else if (time === currentHour) {
+      console.log(time, "present");
+      $(this).css({ backgroundColor: "green" });
+    } else if (time > currentHour) {
+      console.log(time, "future");
+      $(this).css({ backgroundColor: "red" });
+    }
+
+    console.log(time);
+  });
+});
