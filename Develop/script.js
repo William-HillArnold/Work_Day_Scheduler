@@ -3,7 +3,6 @@ $(document).ready(function () {
   $("#currentDay").text(moment().format("dddd, MMMM Do YYYY"));
 
   // Saves input entered into text area for each hour
-
   $(".saveBtn").on("click", function () {
     var click = $(this).parent().attr("id");
     var eventInput = $(this).siblings(".description").val();
